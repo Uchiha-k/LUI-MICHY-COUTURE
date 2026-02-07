@@ -1,0 +1,276 @@
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function main() {
+    const products = [
+        // --- BRIDAL COLLECTION ---
+        {
+            name: "The Radiant Ivory Gown",
+            description: "An ethereal floor-length bridal gown crafted from premium ivory silk and intricate Kenyan lace. Features a delicate sweetheart neckline and a dramatic cathedral train.",
+            price: 185000,
+            priceUSD: 1434.10,
+            sku: "BRD-001",
+            category: "Bridal",
+            images: ["/images/bridal-collection.jpg"],
+            stock: 5,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Royal Lace Majesty",
+            description: "A regal bridal masterpiece featuring off-the-shoulder sleeves and hand-stitched lace embroidery. Designed for the queen who commands the room.",
+            price: 210000,
+            priceUSD: 1627.90,
+            sku: "BRD-002",
+            category: "Bridal",
+            images: ["/images/bridal-collection.jpg"],
+            stock: 3,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Modern Minimalist Silk",
+            description: "Clean architectural lines define this sleek satin wedding dress. Perfect for the contemporary bride seeking sophisticated simplicity.",
+            price: 155000,
+            priceUSD: 1201.55,
+            sku: "BRD-003",
+            category: "Bridal",
+            images: ["/images/bridal-collection.jpg"],
+            stock: 7,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Boho Luxury Chiffon",
+            description: "Romantic and flowing, this chiffon gown features delicate floral appliques and a soft, airy silhouette for a whimsical bridal look.",
+            price: 140000,
+            priceUSD: 1085.27,
+            sku: "BRD-004",
+            category: "Bridal",
+            images: ["/images/bridal-collection.jpg"],
+            stock: 10,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Traditional Fusion Ivory",
+            description: "A breathtaking blend of traditional heritage and modern luxury. Features rich textures and subtle beadwork reflecting timeless culture.",
+            price: 195000,
+            priceUSD: 1511.63,
+            sku: "BRD-005",
+            category: "Bridal",
+            images: ["/images/bridal-collection.jpg"],
+            stock: 4,
+            published: true,
+            featured: true,
+        },
+
+        // --- BESPOKE COUTURE ---
+        {
+            name: "Emerald Power Suit",
+            description: "A perfectly tailored jewel-toned suit in emerald green. Sharp lapels and structured shoulders for the modern woman of influence.",
+            price: 85000,
+            priceUSD: 658.91,
+            sku: "BES-001",
+            category: "Bespoke Couture",
+            images: ["/images/bespoke-couture.jpg"],
+            stock: 0, // Made to order
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Midnight Velvet Blazer",
+            description: "Exquisite midnight blue velvet blazer with silk-satin details. A testament to artisan craftsmanship and refined elegance.",
+            price: 65000,
+            priceUSD: 503.88,
+            sku: "BES-002",
+            category: "Bespoke Couture",
+            images: ["/images/bespoke-couture.jpg"],
+            stock: 0,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Golden Brocade Evening Dress",
+            description: "Custom-made evening dress featuring rich golden brocade with heritage-inspired patterns. A stunning silhouette for high-fashion events.",
+            price: 120000,
+            priceUSD: 930.23,
+            sku: "BES-003",
+            category: "Bespoke Couture",
+            images: ["/images/bespoke-couture.jpg"],
+            stock: 0,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Crimson Structural Top",
+            description: "An architectural masterpiece in crimson red. Bold, structured, and designed to make a singular statement in luxury fashion.",
+            price: 45000,
+            priceUSD: 348.84,
+            sku: "BES-004",
+            category: "Bespoke Couture",
+            images: ["/images/bespoke-couture.jpg"],
+            stock: 0,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Monochrome Artisan Set",
+            description: "A chic black-and-white geometric set, handcrafted for the ultimate custom fit. Where artisan excellence meets urban sophistication.",
+            price: 95000,
+            priceUSD: 736.43,
+            sku: "BES-005",
+            category: "Bespoke Couture",
+            images: ["/images/bespoke-couture.jpg"],
+            stock: 0,
+            published: true,
+            featured: true,
+        },
+
+        // --- EVENT WEAR ---
+        {
+            name: "Ruby Gala Gown",
+            description: "A show-stopping silk gown in ruby red, featuring a dramatic cape and elegant draping. Designed for the grandest entrances.",
+            price: 110000,
+            priceUSD: 852.71,
+            sku: "EVN-001",
+            category: "Event Wear",
+            images: ["/images/event-wear.jpg"],
+            stock: 8,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Sapphire Shimmer Dress",
+            description: "Extravagant shimmering sequins in deep sapphire. This floor-length dress catches every light in the room with classic glamour.",
+            price: 98000,
+            priceUSD: 759.69,
+            sku: "EVN-002",
+            category: "Event Wear",
+            images: ["/images/event-wear.jpg"],
+            stock: 12,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Orchid Layered Tulle",
+            description: "Voluminous orchid purple tulle layers create a romantic and majestic silhouette. A dreamy choice for celebrating special moments.",
+            price: 88000,
+            priceUSD: 682.17,
+            sku: "EVN-003",
+            category: "Event Wear",
+            images: ["/images/event-wear.jpg"],
+            stock: 6,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Onyx Backless Glamour",
+            description: "Sophisticated and daring, this onyx black gown features a stunning backless design with diamond-encrusted straps.",
+            price: 105000,
+            priceUSD: 813.95,
+            sku: "EVN-004",
+            category: "Event Wear",
+            images: ["/images/event-wear.jpg"],
+            stock: 4,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Sunset Silk Gradient",
+            description: "Flowing premium silk with a vibrant sunset gradient. Captures the beauty of an African dusk in a chic, wearable piece of art.",
+            price: 75000,
+            priceUSD: 581.40,
+            sku: "EVN-005",
+            category: "Event Wear",
+            images: ["/images/event-wear.jpg"],
+            stock: 15,
+            published: true,
+            featured: true,
+        },
+
+        // --- LIMITED EDITIONS ---
+        {
+            name: "Sculptural Silver Metallic",
+            description: "An avant-garde masterpiece. This limited edition piece uses silver metallic fabrics to create a unique, sculptural silhouette.",
+            price: 150000,
+            priceUSD: 1162.79,
+            sku: "LMT-001",
+            category: "Limited Edition",
+            images: ["/images/limited-edition.jpg"],
+            stock: 2,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Neon Tribal Fusion",
+            description: "Where future meets heritage. Bold neon accents fused with traditional geometric patterns in a limited run of only 5 pieces.",
+            price: 135000,
+            priceUSD: 1046.51,
+            sku: "LMT-002",
+            category: "Limited Edition",
+            images: ["/images/limited-edition.jpg"],
+            stock: 5,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Plumed Majesty Monochrome",
+            description: "Exclusive collector's item featuring hand-placed feather detailing and luxury hand-painted silk. Only 3 in existence.",
+            price: 250000,
+            priceUSD: 1937.98,
+            sku: "LMT-003",
+            category: "Limited Edition",
+            images: ["/images/limited-edition.jpg"],
+            stock: 3,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Geometric Amber Artisan",
+            description: "Intricate 3D fabric manipulation in warm amber tones. A rare and breathtaking example of modern African couture innovation.",
+            price: 145000,
+            priceUSD: 1124.03,
+            sku: "LMT-004",
+            category: "Limited Edition",
+            images: ["/images/limited-edition.jpg"],
+            stock: 4,
+            published: true,
+            featured: true,
+        },
+        {
+            name: "Celestial Gold Cape",
+            description: "Shimmering gold-threaded fabric with a majestic cape silhouette. Inspired by the starry Kenyan night sky. Extremely limited.",
+            price: 180000,
+            priceUSD: 1395.35,
+            sku: "LMT-005",
+            category: "Limited Edition",
+            images: ["/images/limited-edition.jpg"],
+            stock: 2,
+            published: true,
+            featured: true,
+        },
+    ];
+
+    console.log('Starting to seed 20 new luxury products...');
+
+    for (const product of products) {
+        await prisma.product.upsert({
+            where: { sku: product.sku },
+            update: product,
+            create: product,
+        });
+    }
+
+    console.log('Successfully seeded 20 products across categories: Bridal, Bespoke Couture, Event Wear, Limited Edition.');
+}
+
+main()
+    .catch((e) => {
+        console.error(e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
